@@ -33,5 +33,6 @@ jobs:
           publish_dir: ./my-hugo-academic/public
           publish_branch: gh-pages
           cname: barryw.xyz
+          force_orphan: true
           allow_empty_commit: true
           external_repository: GithuBarry/GithuBarry.github.io
