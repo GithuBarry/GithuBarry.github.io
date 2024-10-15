@@ -19,19 +19,19 @@ jobs:
 
       - name: Install dependencies
         run: |
-          cd private-repo
+          cd content
           npm ci
 
       - name: Build
         run: |
-          cd private-repo
+          cd content
           npm run build
 
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
         with:
           deploy_key: ${{ secrets.ACTIONS_DEPLOY_KEY }}
-          publish_dir: ./private-repo/public
+          publish_dir: ./content/public
           publish_branch: gh-pages
           cname: barryw.xyz
           force_orphan: true
