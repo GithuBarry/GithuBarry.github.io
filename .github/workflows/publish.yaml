@@ -32,6 +32,8 @@ jobs:
           mkdir -p deploy
           cp -r content/public/* deploy/
           cp -r content/public/.* deploy/ 2>/dev/null || :
+          cp content/CNAME deploy/ 2>/dev/null || :
+          touch deploy/.nojekyll
 
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
