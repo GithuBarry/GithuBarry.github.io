@@ -27,17 +27,11 @@ jobs:
           cd content
           npm run build
 
-      - name: Debug - List content of public directory
-        run: |
-          echo "Contents of content/public:"
-          ls -R content/public
-
       - name: Prepare deployment
         run: |
           mkdir -p deploy
-          cp -r content/public/* deploy/ || echo "No files in content/public"
-          cp -r content/public/.* deploy/ 2>/dev/null || echo "No hidden files in content/public"
-          cp content/CNAME deploy/ 2>/dev/null || echo "No CNAME file found"
+          cp -r content/public/* deploy/
+          cp -r content/public/.* deploy/ 2>/dev/null || :
           touch deploy/.nojekyll
 
       - name: Debug - List content of deploy directory
