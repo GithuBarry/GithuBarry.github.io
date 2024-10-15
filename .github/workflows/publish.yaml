@@ -1,36 +1,37 @@
 name: GitHub Pages
-
 on:
   push:
     branches:
       - main
-
 jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
         with:
           submodules: recursive
           token: ${{ secrets.WEB_PAT }}
 
-      - name: Setup Hugo
-        uses: peaceiris/actions-hugo@v2
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
         with:
-          hugo-version: '0.119.0'
-          extended: true
+          node-version: '18'
+
+      - name: Install dependencies
+        run: |
+          cd private-repo
+          npm ci
 
       - name: Build
         run: |
-          echo "Hugo Cache Dir: $(hugo config | grep cachedir)"
-          cd my-hugo-academic
-          hugo --minify
+          cd private-repo
+          npm run build
 
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
         with:
           deploy_key: ${{ secrets.ACTIONS_DEPLOY_KEY }}
-          publish_dir: ./my-hugo-academic/public
+          publish_dir: ./private-repo/public
           publish_branch: gh-pages
           cname: barryw.xyz
           force_orphan: true
