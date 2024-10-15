@@ -22,26 +22,18 @@ jobs:
           cd content
           npm ci
 
-      - name: Build
+      - name: Build and Generate Static Site
         run: |
           cd content
-          npm run build
+          npm run generate
 
       - name: Prepare deployment
         run: |
           mkdir -p deploy
           cp -r content/build/* deploy/
-          cp -r content/public/* deploy/
+          cp -r content/public/* deploy/ 2>/dev/null || :
           cp content/public/.* deploy/ 2>/dev/null || :
           touch deploy/.nojekyll
-          # Ensure index.html is in the root
-          if [ -f content/public/index.html ]; then
-            cp content/public/index.html deploy/
-          elif [ -f content/build/index.html ]; then
-            cp content/build/index.html deploy/
-          else
-            echo "Warning: index.html not found in public or build directories"
-          fi
 
       - name: Debug - List content of deploy directory
         run: |
