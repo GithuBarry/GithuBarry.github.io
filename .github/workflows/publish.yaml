@@ -29,16 +29,15 @@ jobs:
 
       - name: Prepare deployment
         run: |
-          cd content
           mkdir -p deploy
-          cp -r public/* deploy/
-          cp -r public/.* deploy/ 2>/dev/null || :
+          cp -r content/public/* deploy/
+          cp -r content/public/.* deploy/ 2>/dev/null || :
 
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
         with:
           deploy_key: ${{ secrets.ACTIONS_DEPLOY_KEY }}
-          publish_dir: ./content/deploy
+          publish_dir: ./deploy
           publish_branch: gh-pages
           cname: barryw.xyz
           force_orphan: true
