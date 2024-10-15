@@ -34,11 +34,21 @@ jobs:
           cp -r content/public/* deploy/
           cp content/public/.* deploy/ 2>/dev/null || :
           touch deploy/.nojekyll
+          # Ensure index.html is in the root
+          if [ -f content/public/index.html ]; then
+            cp content/public/index.html deploy/
+          elif [ -f content/build/index.html ]; then
+            cp content/build/index.html deploy/
+          else
+            echo "Warning: index.html not found in public or build directories"
+          fi
 
       - name: Debug - List content of deploy directory
         run: |
           echo "Contents of deploy directory:"
-          ls -R deploy
+          ls -la deploy
+          echo "Contents of deploy/build directory:"
+          ls -la deploy/build
 
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
