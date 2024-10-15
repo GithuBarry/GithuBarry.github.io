@@ -30,8 +30,9 @@ jobs:
       - name: Prepare deployment
         run: |
           mkdir -p deploy
+          cp -r content/build/* deploy/
           cp -r content/public/* deploy/
-          cp -r content/public/.* deploy/ 2>/dev/null || :
+          cp content/public/.* deploy/ 2>/dev/null || :
           touch deploy/.nojekyll
 
       - name: Debug - List content of deploy directory
